@@ -1,5 +1,6 @@
 # guacamole-compose
-Docker compose files and build script for Apache Guacamole (v1.3.0) + Traefik + PostgreSQL.
+## guac-PR
+Configuration script and docker-compose YML for deploying Apache Guacamole (v1.3.0) + Traefik + PostgreSQL.
 
 It allows to quickly deploy a jumpserver solution using Apache Guacamole that supports local authentication, LDAP and TOTP (2FA)
 
