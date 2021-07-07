@@ -54,5 +54,8 @@ If you wish, you can use your own certificates by placing the private key on ***
 ## Running
 
 ```bash
+chmod +x init.sh
+./init.sh
+
 docker-compose -f /etc/guacamole/guac-PR/docker-compose.yml up -d
 ```
