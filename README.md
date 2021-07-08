@@ -1,6 +1,5 @@
 # guacamole-compose
-## guac-PR
-Configuration script and docker-compose YML for deploying Apache Guacamole (v1.3.0) + Traefik + PostgreSQL.
+Docker compose files and build script for Apache Guacamole (v1.3.0) + Traefik + PostgreSQL.
 
 It allows to quickly deploy a jumpserver solution using Apache Guacamole that supports local authentication, LDAP and TOTP (2FA)
 
@@ -51,6 +50,58 @@ openssl req -nodes -newkey rsa:4096 -new -x509 -keyout $__basePath/ssl/jumpserve
 
 If you wish, you can use your own certificates by placing the private key on ***basePath*/ssl/jumpserver.key** and the certificate on ***basePath*/ssl/jumpserver.cer**
 
+### ENABLE LDAP AUTH
+Uncomment lines 74-81 on ***docker-compose.yml*** located on the path configured on *basePath*
+
+```bash
+[...]
+#### UNCOMMENT TO ENABLE LDAP AUTH  ####    
+#LDAP_HOSTNAME: localdomain
+#LDAP_PORT: 389
+#LDAP_ENCRYPTION_METHOD: none
+#LDAP_USER_BASE_DN: OU=Users,DC=localdomain
+#LDAP_USERNAME_ATTRIBUTE: sAMAccountName
+#LDAP_SEARCH_BIND_DN: CN=guacuser,OU=Users,DC=localdomain
+#LDAP_SEARCH_BIND_PASSWORD: gu4c9ASs
+#LDAP_USER_SEARCH_FILTER: (|(memberOf=CN=Guacamole Admins,DC=localdomain)(memberOf=CN=Guacamole Users,DC=localdomain))
+#####  #####  ####  
+[...]
+```
+
+### TOTP (2FA) RESET
+1. Run ***docker ps*** to get the container ID of the PostgreSQL service
+```bash
+# docker ps
+[...]
+1820d1e2526f   postgres:13                 "docker-entrypoint.s…"   [...]
+[...]
+```
+
+2. With the container ID execute the psql CLI
+```bash
+# docker exec -it 1820d1e2526f psql -U guacamole_user guacamole_db
+psql (13.3 (Debian 13.3-1.pgdg100+1))
+Type "help" for help.
+
+guacamole_db=#
+```
+
+3. Obtain the ***user_id*** you wish to reset the TOTP:
+```bash
+guacamole_db=# SELECT user_id FROM guacamole_user INNER JOIN guacamole_entity ON guacamole_entity.entity_id = guacamole_user.entity_id WHERE guacamole_entity.name = 'guacadmin';
+ user_id
+---------
+       1
+(1 row)
+```
+
+4. Update the DB value to reset the TOTP:
+```bash
+guacamole_db=# UPDATE guacamole_user_attribute SET attribute_value='false' WHERE attribute_name = 'guac-totp-key-confirmed' and user_id = '1';
+UPDATE 1
+```
+
+5. Rescan the QR code ;)
 
 ## Running
 
@@ -60,3 +111,10 @@ chmod +x init.sh
 
 docker-compose -f /etc/guacamole/guac-PR/docker-compose.yml up -d
 ```
+
+## Login
+Default username and password
+
+**user**: *guacadmin*
+
+**pass**: *guacadmin*
