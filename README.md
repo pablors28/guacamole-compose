@@ -53,7 +53,7 @@ If you wish, you can use your own certificates by placing the private key on ***
 ### ENABLE LDAP AUTH
 Uncomment lines 74-81 on ***docker-compose.yml*** located on the path configured on *basePath*
 
-```bash
+```
 [...]
 #### UNCOMMENT TO ENABLE LDAP AUTH  ####    
 #LDAP_HOSTNAME: localdomain
@@ -70,7 +70,7 @@ Uncomment lines 74-81 on ***docker-compose.yml*** located on the path configured
 
 ### TOTP (2FA) RESET
 1. Run ***docker ps*** to get the container ID of the PostgreSQL service
-```bash
+```
 # docker ps
 [...]
 1820d1e2526f   postgres:13                 "docker-entrypoint.s…"   [...]
@@ -78,7 +78,7 @@ Uncomment lines 74-81 on ***docker-compose.yml*** located on the path configured
 ```
 
 2. With the container ID execute the psql CLI
-```bash
+```
 # docker exec -it 1820d1e2526f psql -U guacamole_user guacamole_db
 psql (13.3 (Debian 13.3-1.pgdg100+1))
 Type "help" for help.
@@ -87,7 +87,7 @@ guacamole_db=#
 ```
 
 3. Obtain the ***user_id*** you wish to reset the TOTP:
-```bash
+```
 guacamole_db=# SELECT user_id FROM guacamole_user INNER JOIN guacamole_entity ON guacamole_entity.entity_id = guacamole_user.entity_id WHERE guacamole_entity.name = 'guacadmin';
  user_id
 ---------
@@ -96,7 +96,7 @@ guacamole_db=# SELECT user_id FROM guacamole_user INNER JOIN guacamole_entity ON
 ```
 
 4. Update the DB value to reset the TOTP:
-```bash
+```
 guacamole_db=# UPDATE guacamole_user_attribute SET attribute_value='false' WHERE attribute_name = 'guac-totp-key-confirmed' and user_id = '1';
 UPDATE 1
 guacamole_db=# quit
