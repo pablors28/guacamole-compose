@@ -32,8 +32,8 @@ mkdir -p $__basePath/tomcatConfig
 mkdir -p $__basePath/guac_home/extensions
 mkdir -p $__basePath/ssl
 echo "DIRECTORIES CREATED..."
-chmod 666 $__basePath/record
-chmod 666 $__basePath/share
+chmod 777 $__basePath/record
+chmod 777 $__basePath/share
 echo "PERMISSIONS GRANTED..."
 
 echo "CREATING SSL CERTIFICATES (self signed)..."
@@ -256,7 +256,8 @@ tee $__basePath/docker-compose.yml <<EOF123 > /dev/null
 ####################################################################################
 # TOTP RESET
 ####################################################################################
-# docker exec -it <id contenedor> psql -U ${__userDB} ${__DBname}
+# Run "docker ps" to get the PostgreSQL container ID and then:
+# docker exec -it <container id> psql -U ${__userDB} ${__DBname}
 # To obtain the user_id run:
 # SELECT user_id FROM ${__userDB} INNER JOIN guacamole_entity ON guacamole_entity.entity_id = ${__userDB}.entity_id WHERE guacamole_entity.name = 'USUARIO';
 # Update the user_id to reset the TOTP
@@ -413,7 +414,10 @@ EOF123
 
 
 echo "FINISHED!"
+echo ""
+echo ""
 echo "You can use your own certificates by placing the private key in $__basePath/ssl/jumpserver.key and the cert in $__basePath/ssl/jumpserver.cer"
-
+echo ""
+echo ""
 echo "Run the following command:"
 echo "docker-compose -f $__basePath/docker-compose.yml up -d"
