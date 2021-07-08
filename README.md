@@ -71,7 +71,7 @@ Uncomment lines 74-81 on ***docker-compose.yml*** located on the path configured
 ### TOTP (2FA) RESET
 1. Run ***docker ps*** to get the container ID of the PostgreSQL service
 ```
-# docker ps
+$ sudo docker ps
 [...]
 1820d1e2526f   postgres:13                 "docker-entrypoint.s…"   [...]
 [...]
@@ -79,7 +79,7 @@ Uncomment lines 74-81 on ***docker-compose.yml*** located on the path configured
 
 2. With the container ID execute the psql CLI
 ```
-# docker exec -it 1820d1e2526f psql -U guacamole_user guacamole_db
+$ sudo docker exec -it 1820d1e2526f psql -U guacamole_user guacamole_db
 psql (13.3 (Debian 13.3-1.pgdg100+1))
 Type "help" for help.
 
@@ -108,9 +108,9 @@ guacamole_db=# quit
 
 ```bash
 chmod +x init.sh
-./init.sh
+$ sudo ./init.sh
 
-docker-compose -f /etc/guacamole/guac-PR/docker-compose.yml up -d
+$ sudo docker-compose -f /etc/guacamole/guac-PR/docker-compose.yml up -d
 ```
 
 ## Login
