@@ -99,6 +99,7 @@ guacamole_db=# SELECT user_id FROM guacamole_user INNER JOIN guacamole_entity ON
 ```bash
 guacamole_db=# UPDATE guacamole_user_attribute SET attribute_value='false' WHERE attribute_name = 'guac-totp-key-confirmed' and user_id = '1';
 UPDATE 1
+guacamole_db=# quit
 ```
 
 5. Rescan the QR code ;)
