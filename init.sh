@@ -425,4 +425,4 @@ echo -e "${GREEN}You can use your own certificates by placing the private key in
 echo ""
 echo ""
 echo "Run the following command:"
-echo -e "${BOLDRED}docker-compose -f $__basePath/docker-compose.yml up -d${ENDCOLOR}"
+echo -e "${BOLDRED}sudo docker-compose -f $__basePath/docker-compose.yml up -d${ENDCOLOR}"
