@@ -260,7 +260,7 @@ tee $__basePath/docker-compose.yml <<EOF123 > /dev/null
 # Run "docker ps" to get the PostgreSQL container ID and then:
 # docker exec -it <container id> psql -U ${__userDB} ${__DBname}
 # To obtain the user_id run:
-# SELECT user_id FROM ${__userDB} INNER JOIN guacamole_entity ON guacamole_entity.entity_id = ${__userDB}.entity_id WHERE guacamole_entity.name = 'USUARIO';
+# SELECT user_id FROM ${__userDB} INNER JOIN guacamole_entity ON guacamole_entity.entity_id = ${__userDB}.entity_id WHERE guacamole_entity.name = 'USERNAME';
 # Update the user_id to reset the TOTP
 # UPDATE ${__userDB}_attribute SET attribute_value='false' WHERE attribute_name = 'guac-totp-key-confirmed' and user_id = '1';
 # quit
