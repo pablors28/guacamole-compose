@@ -22,6 +22,7 @@ __traefikFile="tls:
 "
 
 
+
 #CREATE DIRECTORIES AND PERMISSIONS
 mkdir -p $__basePath/data
 mkdir -p $__basePath/drive
@@ -411,13 +412,17 @@ services:
         - traefik.docker.network=guacamole_guacnetwork
 EOF123
 
-
+## To color the last line
+GREEN="\e[32m"
+BOLDRED="\e[1;31m"
+ENDCOLOR="\e[0m"
+##
 
 echo "FINISHED!"
 echo ""
 echo ""
-echo "You can use your own certificates by placing the private key in $__basePath/ssl/jumpserver.key and the cert in $__basePath/ssl/jumpserver.cer"
+echo -e "${GREEN}You can use your own certificates by placing the private key in $__basePath/ssl/jumpserver.key and the cert in $__basePath/ssl/jumpserver.cer${ENDCOLOR}"
 echo ""
 echo ""
 echo "Run the following command:"
-echo "docker-compose -f $__basePath/docker-compose.yml up -d"
+echo -e "${BOLDRED}docker-compose -f $__basePath/docker-compose.yml up -d${ENDCOLOR}"
